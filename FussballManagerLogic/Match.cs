@@ -7,7 +7,8 @@
 
         public Match()
         {
-            
+            TeamOne = new Team("Auto1");
+            TeamTwo = new Team("Auto2");
         }
 
         public Match(Team pTeamOne, Team pTeamTwo)

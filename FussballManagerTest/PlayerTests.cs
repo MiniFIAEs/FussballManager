@@ -12,9 +12,10 @@ namespace FussballManagerTest
             Assert.IsNotNull( new Player());
         }
 
+        [TestMethod]
         public void CreationOverload()
         {
-            Player p = new Player {Name = "Hans", Speed = 50, Precision = 50, Duel = 50, Positions = PlayerPositions.Keeper };
+            Player p = new Player {Name = "Hans", Speed = 50, Precision = 50, Duel = 50, Position = PlayerPositions.Keeper };
             Assert.IsNotNull(p);
         }
     }
