@@ -3,11 +3,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FussballManagerTest
 {
     [TestClass]
-    public class UnitTest1
+    public class MatchTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Creation()
         {
+            Assert.IsNotNull(new Match());
         }
+
     }
 }
