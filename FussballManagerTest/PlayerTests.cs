@@ -1,3 +1,4 @@
+using FussballManagerLogic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FussballManagerTest
@@ -13,7 +14,7 @@ namespace FussballManagerTest
 
         public void CreationOverload()
         {
-            Player p = new Player {Name = "Hans", Speed = 50, Precision = 50, Duel = 50, Position = PlayerPositions.Keeper };
+            Player p = new Player {Name = "Hans", Speed = 50, Precision = 50, Duel = 50, Positions = PlayerPositions.Keeper };
             Assert.IsNotNull(p);
         }
     }

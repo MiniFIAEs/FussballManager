@@ -1,3 +1,4 @@
+using FussballManagerLogic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FussballManagerTest
