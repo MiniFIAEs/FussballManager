@@ -4,17 +4,13 @@ namespace FussballManagerLogic
 {
     public class Team
     {
-        private List<Player> players;
+        public List<Player> Players { get; set; }
+        public string Name { get; init; }
 
-        public List<Player> Players
-        {
-            get => players;
-            set => players = value;
-        }
 
-        public Team()
+        public Team(string pName = "NoNamedTeam")
         {
-            
+            Name = pName;
         }
     }
 }

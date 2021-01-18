@@ -18,7 +18,7 @@ namespace FussballManagerTest
             Assert.IsNotNull(t.Players);
             for (int counter = 0; counter < 11; counter++)
                 t.Players.Add(new Player());
-
+            Assert.IsTrue(t.Players.Count == 11);
         }
 
     }

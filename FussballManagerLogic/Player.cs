@@ -2,41 +2,11 @@
 {
     public class Player
     {
-        private string name;
-        private byte speed;
-        private byte precision;
-        private byte duel;
-        private PlayerPositions _positions;
-
-        public string Name
-        {
-            get => name;
-            set => name = value;
-        }
-
-        public byte Speed
-        {
-            get => speed;
-            set => speed = value;
-        }
-
-        public byte Precision
-        {
-            get => precision;
-            set => precision = value;
-        }
-
-        public byte Duel
-        {
-            get => duel;
-            set => duel = value;
-        }
-
-        public PlayerPositions Positions
-        {
-            get => _positions;
-            set => _positions = value;
-        }
+        public string Name { get; init; }
+        public byte Speed { get; set; }
+        public byte Precision { get; set; }
+        public byte Duel { get; set; }
+        public PlayerPositions Positions { get; set; }
 
 
         public Player()
