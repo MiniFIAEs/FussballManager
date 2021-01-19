@@ -33,9 +33,9 @@ namespace FussballManagerTest
         [TestMethod]
         public void CreationTwoParameter()
         {
-            Team t1 = new("TeamOne");
+            Team t1 = Helper.CreateTeam("TeamOne");
             Assert.IsNotNull(t1);
-            Team t2 = new("TeamTwo");
+            Team t2 = Helper.CreateTeam("TeamTwo");
             Assert.IsNotNull(t2);
             Assert.IsTrue(t1.Players.Count == 11);
             Assert.IsTrue(t2.Players.Count == 11);
@@ -44,5 +44,39 @@ namespace FussballManagerTest
             Assert.IsNotNull(new Match(t1, t2));
         }
 
+        [TestMethod]
+        public void ResultBalancedTeams()
+        {
+            Team tA = new();
+            tA.Players.Add(new Player("A1", 50, 50, 50, PlayerPositions.Keeper));
+            tA.Players.Add(new Player("A2", 50, 50, 50, PlayerPositions.Defence));
+            tA.Players.Add(new Player("A3", 50, 50, 50, PlayerPositions.Defence));
+            tA.Players.Add(new Player("A4", 50, 50, 50, PlayerPositions.Defence));
+            tA.Players.Add(new Player("A5", 50, 50, 50, PlayerPositions.Midfield));
+            tA.Players.Add(new Player("A6", 50, 50, 50, PlayerPositions.Midfield));
+            tA.Players.Add(new Player("A7", 50, 50, 50, PlayerPositions.Midfield));
+            tA.Players.Add(new Player("A8", 50, 50, 50, PlayerPositions.Midfield));
+            tA.Players.Add(new Player("A9", 50, 50, 50, PlayerPositions.Attack));
+            tA.Players.Add(new Player("AA", 50, 50, 50, PlayerPositions.Attack));
+            tA.Players.Add(new Player("AB", 50, 50, 50, PlayerPositions.Attack));
+            
+            Team tB = new();
+            tB.Players.Add(new Player("B1", 50, 50, 50, PlayerPositions.Keeper));
+            tB.Players.Add(new Player("B2", 50, 50, 50, PlayerPositions.Defence));
+            tB.Players.Add(new Player("B3", 50, 50, 50, PlayerPositions.Defence));
+            tB.Players.Add(new Player("B4", 50, 50, 50, PlayerPositions.Defence));
+            tB.Players.Add(new Player("B5", 50, 50, 50, PlayerPositions.Midfield));
+            tB.Players.Add(new Player("B6", 50, 50, 50, PlayerPositions.Midfield));
+            tB.Players.Add(new Player("B7", 50, 50, 50, PlayerPositions.Midfield));
+            tB.Players.Add(new Player("B8", 50, 50, 50, PlayerPositions.Midfield));
+            tB.Players.Add(new Player("B9", 50, 50, 50, PlayerPositions.Attack));
+            tB.Players.Add(new Player("BA", 50, 50, 50, PlayerPositions.Attack));
+            tB.Players.Add(new Player("BB", 50, 50, 50, PlayerPositions.Attack));
+
+            Match m = new(tA,tB);
+            m.CalculateResult();
+            Assert.IsTrue(m.Home == 0);
+            Assert.IsTrue(m.Visitor == 0);
+        }
     }
 }
