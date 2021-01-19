@@ -49,7 +49,7 @@ namespace FussballManagerLogic
                 }
             }
 
-            return "Error";
+            return "";
         }
     }
 }
