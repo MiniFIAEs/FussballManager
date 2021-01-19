@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FussballManagerLogic;
 
 namespace FussballManagerUI
 {
@@ -23,6 +24,9 @@ namespace FussballManagerUI
         public MainWindow()
         {
             InitializeComponent();
+
+            Player Testplayer = new Player(50, 50, 50, PlayerPositions.Attack);
+            MainWindowTextBlock.Text = Testplayer.Name;
         }
     }
 }
