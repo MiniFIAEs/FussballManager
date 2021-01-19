@@ -17,11 +17,7 @@ namespace FussballManagerLogic
         public Team(string pName = "NoNamedTeam")
         {
             Name = pName;
-            players = new List<Player>(11);
-            for (int i = 0; i < players.Capacity; i++)
-            {
-                players.Add(new Player());
-            }
+            Players = new List<Player>();
         }
     }
 }

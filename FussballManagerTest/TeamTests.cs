@@ -15,9 +15,8 @@ namespace FussballManagerTest
         [TestMethod]
         public void CreationAndInitialization()
         {
-            Team t = new();
+            Team t = Helper.CreateTeam();
             Assert.IsNotNull(t);
-
             t.Players.Capacity = 11;
             Assert.IsNotNull(t.Players);
             Assert.IsTrue(t.Players.Count == 11);
@@ -26,7 +25,7 @@ namespace FussballManagerTest
         [TestMethod]
         public void TeamWithCorrectTeamSize()
         {
-            Team t = new();
+            Team t = Helper.CreateTeam();
             Assert.IsNotNull(t);
             t.Players.Capacity = 11;
             Assert.IsNotNull(t.Players);
@@ -36,9 +35,9 @@ namespace FussballManagerTest
         [TestMethod]
         public void PlayersSetter()
         {
-            Team t = new();
+            Team t = Helper.CreateTeam();
             Assert.IsTrue(t.Name == "NoNamedTeam");
-            Assert.IsTrue(t.Players[1].Name == "NoNamedPlayer");
+            Assert.IsTrue(t.Players[1].Name == "B2");
             t.Players[1] = new Player("NamedPlayer", 0,0,0, PlayerPositions.Midfield);
             Assert.IsTrue(t.Players[1].Name == "NamedPlayer");
         }
