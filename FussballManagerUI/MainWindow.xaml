@@ -45,7 +45,7 @@
                 <StackPanel.Resources>
                     <Style x:Key="styleLabel" TargetType="Label"></Style>
                 </StackPanel.Resources>
-                <Label Style="styleLabel"></Label>
+                <Label Style="{StaticResource styleLabel}"></Label>
             </StackPanel>
         </Grid>
 
