@@ -1,0 +1,165 @@
+﻿<Page x:Class="FussballManagerUI.CurrentSeasonPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FussballManagerUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CurrentSeasonPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="220" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="240" />
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="240" />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0"
+               Grid.Column="1"
+               Grid.ColumnSpan="8"
+               Content="this saison"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               FontFamily="Gill Sans"
+               FontSize="50"
+               Foreground="Chartreuse" />
+        <!--Heim-->
+        <ListView Grid.Row="1"
+                  Grid.Column="3"
+                  Grid.RowSpan="2"
+                  Margin="0,0,10,10"
+                  ItemsSource="{Binding Matches}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding TeamOne.Name}" Width="200"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Row="1"
+              Grid.Column="4"
+              Grid.RowSpan="2"
+              Margin="0,0,0,10" 
+              >
+            <StackPanel Orientation="Vertical" Height="Auto">
+                <StackPanel.Resources>
+                    <Style x:Key="StyleLabel" TargetType="Label">
+                        <Setter Property="Content" Value="{Binding TeamOne.Name}"></Setter>
+                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                        <Setter Property="FontFamily" Value="Gill Sans"></Setter>
+                        <Setter Property="FontSize" Value="15"></Setter>
+                        <Setter Property="Foreground" Value="DarkSeaGreen"></Setter>
+                        <Setter Property="Background" Value="DarkGreen"></Setter>
+                        <Setter Property="Height" Value="40"></Setter>
+                        <Setter Property="Width" Value="38"></Setter>
+                    </Style>
+                </StackPanel.Resources>
+
+                
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+            </StackPanel>
+        </Grid>
+
+
+        <!-- : -->
+        <Grid Grid.Row="1"
+              Grid.Column="5"
+              Grid.RowSpan="2"
+              Margin="3,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style x:Key="StyleLabel" TargetType="Label">
+                    <Setter Property="Content" Value=":" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="Foreground" Value="Chartreuse" />
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="FontWeight" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+            </Grid.Resources>
+            <Label Grid.Row="0" Style="{StaticResource StyleLabel}" />
+            <Label Grid.Row="1" Style="{StaticResource StyleLabel}" />
+            <Label Grid.Row="2" Style="{StaticResource StyleLabel}" />
+            <Label Grid.Row="3" Style="{StaticResource StyleLabel}" />
+            <Label Grid.Row="4" Style="{StaticResource StyleLabel}" />
+            <Label Grid.Row="5" Style="{StaticResource StyleLabel}" />
+            <Label Grid.Row="6" Style="{StaticResource StyleLabel}" />
+            <Label Grid.Row="7" Style="{StaticResource StyleLabel}" />
+            <Label Grid.Row="8" Style="{StaticResource StyleLabel}" />
+
+        </Grid>
+        <!--Gast-->
+        <ListView Grid.Row="1"
+                  Grid.Column="6"
+                  Grid.RowSpan="2"
+                  Margin="0,0,0,10" />
+        <ListView Grid.Row="1"
+                  Grid.Column="8"
+                  Grid.RowSpan="2"
+                  Margin="0,0,0,10" />
+        <Grid Grid.Row="1"
+              Grid.Column="6"
+              Grid.RowSpan="2"
+              Margin="0,0,0,10" >
+            <StackPanel Orientation="Vertical">
+                <StackPanel.Resources>
+                    <Style x:Key="StyleLabel" TargetType="Label">
+                        <Setter Property="Content" Value="{Binding TeamTwo.Name}"></Setter>
+                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                        <Setter Property="FontFamily" Value="Gill Sans"></Setter>
+                        <Setter Property="FontSize" Value="15"></Setter>
+                        <Setter Property="Foreground" Value="DarkSeaGreen"></Setter>
+                        <Setter Property="Background" Value="DarkGreen"></Setter>
+                        <Setter Property="Height" Value="40"></Setter>
+                        <Setter Property="Width" Value="38"></Setter>
+                    </Style>
+                </StackPanel.Resources>
+
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+                <Label Style="{StaticResource StyleLabel}"></Label>
+            </StackPanel>
+        </Grid>
+
+
+    </Grid>
+</Page>

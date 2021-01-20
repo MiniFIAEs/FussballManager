@@ -4,99 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FussballManagerUI"
+        xmlns:logic="clr-namespace:FussballManagerLogic;assembly=FussballManagerLogic"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="1024">
+    <Window.DataContext>
+        <logic:Saison/>
+    </Window.DataContext>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80" />
-            <RowDefinition Height="220" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="170" />
-            <ColumnDefinition Width="10" />
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="240" />
-            <ColumnDefinition Width="40" />
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="40" />
-            <ColumnDefinition Width="240" />
-            <ColumnDefinition Width="20" />
-        </Grid.ColumnDefinitions>
-        <Label Grid.Row="0"
-               Grid.Column="1"
-               Grid.ColumnSpan="8"
-               Content="this saison"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               FontFamily="Gill Sans"
-               FontSize="50"
-               Foreground="Chartreuse" />
-        <!--Heim-->
-        <ListView Grid.Row="1"
-                  Grid.Column="3"
-                  Grid.RowSpan="2"
-                  Margin="0,0,10,10" />
-        <Grid Grid.Row="1"
-              Grid.Column="4"
-              Grid.RowSpan="2"
-              Margin="3,0,3,10" >
-            <StackPanel>
-                <StackPanel.Resources>
-                    <Style x:Key="styleLabel" TargetType="Label"></Style>
-                </StackPanel.Resources>
-                <Label Style="{StaticResource styleLabel}"></Label>
-            </StackPanel>
-        </Grid>
-
-
-        <!-- : -->
-        <Grid Grid.Row="1"
-              Grid.Column="5"
-              Grid.RowSpan="2"
-              Margin="3,0,3,10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.Resources>
-                <Style x:Key="styleLabel" TargetType="Label">
-                    <Setter Property="Content" Value=":" />
-                    <Setter Property="VerticalAlignment" Value="Center" />
-                    <Setter Property="VerticalAlignment" Value="Center" />
-                    <Setter Property="Foreground" Value="Chartreuse" />
-                    <Setter Property="FontSize" Value="16" />
-                    <Setter Property="FontWeight" Value="Black" />
-                </Style>
-            </Grid.Resources>
-            <Label Grid.Row="0" Style="{StaticResource styleLabel}"/>
-            <Label Grid.Row="1" Style="{StaticResource styleLabel}"/>
-            <Label Grid.Row="2" Style="{StaticResource styleLabel}"/>
-            <Label Grid.Row="3" Style="{StaticResource styleLabel}"/>
-            <Label Grid.Row="4" Style="{StaticResource styleLabel}"/>
-            <Label Grid.Row="5" Style="{StaticResource styleLabel}"/>
-            <Label Grid.Row="6" Style="{StaticResource styleLabel}"/>
-            <Label Grid.Row="7" Style="{StaticResource styleLabel}"/>
-            <Label Grid.Row="8" Style="{StaticResource styleLabel}"/>
-
-        </Grid>
-        <!--Gast-->
-        <ListView Grid.Row="1"
-                  Grid.Column="7"
-                  Grid.RowSpan="2"
-                  Margin="10,0,10,10" />
-        <Grid Grid.Row="1"
-              Grid.Column="6"
-              Grid.RowSpan="2"
-              Margin="3,0,3,10" />
-
-
+        <TextBlock Text="Fussball Manager" FontSize="30" FontWeight="Bold" FontFamily="Segoe UI" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="10" />
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <Button Content="Aktuelle Saison" Click="currentSeason_Click" />
+        </StackPanel>
+        <Frame x:Name="FrmContent" Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

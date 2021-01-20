@@ -1,4 +1,5 @@
-﻿using FussballManagerLogic;
+﻿using System.Collections.Generic;
+using FussballManagerLogic;
 
 namespace FussballManagerTest
 {
@@ -19,6 +20,20 @@ namespace FussballManagerTest
             result.Players.Add(new Player("BA", 50, 50, 50, PlayerPositions.Attack));
             result.Players.Add(new Player("BB", 50, 50, 50, PlayerPositions.Attack));
             return result;
+        }
+
+        public static Saison CreateSeason()
+        {
+            List<Team> teams = new List<Team>();
+            for (int counter = 0; counter < 18; counter++)
+                teams.Add(Helper.CreateTeam());
+
+            Saison s = new();
+            for (int outer = 1; outer < teams.Count; outer++)
+            for (int inner = 0; inner < teams.Count; inner++)
+                s.Matches.Add(new Match(teams[inner], teams[(inner + outer) % teams.Count]) { Day = outer });
+
+            return s;
         }
     }
 }
