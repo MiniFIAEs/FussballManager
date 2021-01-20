@@ -24,9 +24,11 @@ namespace FussballManagerUI
         public MainWindow()
         {
             InitializeComponent();
+        }
 
-            Player Testplayer = new Player(50, 50, 50, PlayerPositions.Attack);
-            MainWindowTextBlock.Text = Testplayer.Name;
+        private void currentSeason_Click(object sender, RoutedEventArgs e)
+        {
+            frmContent.Navigate(new CurrentSeasonPage(DataContext));
         }
     }
 }

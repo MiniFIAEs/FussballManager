@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FussballManagerLogic\FussballManagerLogic.csproj" />
+    <ProjectReference Include="..\FussballManagerTest\FussballManagerTest.csproj" />
   </ItemGroup>
 
 </Project>
