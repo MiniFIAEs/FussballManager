@@ -22,8 +22,11 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding TeamOne.Name}" Width="200"/>
-                        <TextBlock Text="{Binding TeamTwo.Name}" Width="200"/>
+                        <TextBlock Text="{Binding TeamOne.Name}" Width="100"/>
+                        <Label Content="{Binding TeamOne.Home}" Width="100"/>
+                        <Label Content=":" Width="40"/>
+                        <Label Content="{Binding TeamTwo.Visitor}" Width="100"/>
+                        <TextBlock Text="{Binding TeamTwo.Name}" Width="100"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

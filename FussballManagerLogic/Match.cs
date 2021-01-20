@@ -4,11 +4,32 @@ namespace FussballManagerLogic
 {
     public class Match
     {
-        public Team TeamOne { get; init; }
-        public Team TeamTwo { get; init; }
+        private Team teamOne;
+        private Team teamTwo;
         public int Day { get; set; }
         public int Home { get; private set; }
         public int Visitor { get; private set; }
+        private bool isPlayed;
+
+
+        public bool IsPlayed
+        {
+            get => isPlayed;
+            set => isPlayed = value;
+        }
+
+        public Team TeamOne
+        {
+            get { return teamOne; }
+            set { teamOne = value; }
+        }
+
+        public Team TeamTwo
+        {
+            get { return teamTwo; }
+            set { teamTwo = value; }
+        }
+
 
         public Match()
         {
@@ -44,6 +65,7 @@ namespace FussballManagerLogic
 
             if (teamAPerformance < teamBPerformance) Visitor = 1;
 
+            this.isPlayed = true;
         }
     }
 }

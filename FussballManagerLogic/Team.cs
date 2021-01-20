@@ -4,8 +4,9 @@ namespace FussballManagerLogic
 {
     public class Team
     {
-        public string Name { get; init; }
+        public string Name { get; set; }
         private List<Player> players;
+        
 
         public List<Player> Players
         {

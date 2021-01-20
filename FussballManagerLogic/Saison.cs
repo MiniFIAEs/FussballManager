@@ -22,6 +22,7 @@ namespace FussballManagerLogic
                 if (item.Day == v)
                 {
                     item.CalculateResult();
+                    item.IsPlayed = false;
                 }
             }
         }
