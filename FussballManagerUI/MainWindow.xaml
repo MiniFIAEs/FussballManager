@@ -24,7 +24,7 @@
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0"
-               Grid.Column="0"
+               Grid.Column="1"
                Grid.ColumnSpan="8"
                Content="this saison"
                HorizontalAlignment="Center"
@@ -40,7 +40,16 @@
         <Grid Grid.Row="1"
               Grid.Column="4"
               Grid.RowSpan="2"
-              Margin="3,0,3,10" />
+              Margin="3,0,3,10" >
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style x:Key="styleLabel" TargetType="Label"></Style>
+                </StackPanel.Resources>
+                <Label Style="styleLabel"></Label>
+            </StackPanel>
+        </Grid>
+
+
         <!-- : -->
         <Grid Grid.Row="1"
               Grid.Column="5"
@@ -62,20 +71,20 @@
                     <Setter Property="Content" Value=":" />
                     <Setter Property="VerticalAlignment" Value="Center" />
                     <Setter Property="VerticalAlignment" Value="Center" />
-                    <Setter Property="Foreground" Value="DarkSlateGray" />
+                    <Setter Property="Foreground" Value="Chartreuse" />
                     <Setter Property="FontSize" Value="16" />
                     <Setter Property="FontWeight" Value="Black" />
                 </Style>
             </Grid.Resources>
-            <Label Grid.Row="0" Style="styleLabel"/>
-            <Label Grid.Row="1" Style="styleLabel"/>
-            <Label Grid.Row="2" Style="styleLabel"/>
-            <Label Grid.Row="3" Style="styleLabel"/>
-            <Label Grid.Row="4" Style="styleLabel"/>
-            <Label Grid.Row="5" Style="styleLabel"/>
-            <Label Grid.Row="6" Style="styleLabel"/>
-            <Label Grid.Row="7" Style="styleLabel"/>
-            <Label Grid.Row="8" Style="styleLabel"/>
+            <Label Grid.Row="0" Style="{StaticResource styleLabel}"/>
+            <Label Grid.Row="1" Style="{StaticResource styleLabel}"/>
+            <Label Grid.Row="2" Style="{StaticResource styleLabel}"/>
+            <Label Grid.Row="3" Style="{StaticResource styleLabel}"/>
+            <Label Grid.Row="4" Style="{StaticResource styleLabel}"/>
+            <Label Grid.Row="5" Style="{StaticResource styleLabel}"/>
+            <Label Grid.Row="6" Style="{StaticResource styleLabel}"/>
+            <Label Grid.Row="7" Style="{StaticResource styleLabel}"/>
+            <Label Grid.Row="8" Style="{StaticResource styleLabel}"/>
 
         </Grid>
         <!--Gast-->
