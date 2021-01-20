@@ -17,6 +17,7 @@ namespace FussballManagerUI
         private void CreateDummySeason_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             this.DataContext = Helper.CreateSeason();
+
         }
 #endif
     }

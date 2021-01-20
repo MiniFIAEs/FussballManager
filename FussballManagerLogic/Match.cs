@@ -7,11 +7,25 @@ namespace FussballManagerLogic
         private Team teamOne;
         private Team teamTwo;
         public int Day { get; set; }
-        public int Home { get; private set; }
-        public int Visitor { get; private set; }
+
+        private string home = "0";
+        public string Home
+        {
+            get
+            {
+                return this.isPlayed ? home : "-";
+            }
+            private set { home = value;  }
+        }
+
+        private string visitor = "0";
+        public string Visitor { get
+            {
+                return this.isPlayed ? visitor : "-";
+            }
+            private set { home = value;  }}
+
         private bool isPlayed;
-
-
         public bool IsPlayed
         {
             get => isPlayed;
@@ -61,9 +75,9 @@ namespace FussballManagerLogic
                 teamBPerformance += item.Duel;
             }
 
-            if (teamAPerformance > teamBPerformance) Home = 1;
+            if (teamAPerformance > teamBPerformance) Home = "1";
 
-            if (teamAPerformance < teamBPerformance) Visitor = 1;
+            if (teamAPerformance < teamBPerformance) Visitor = "1";
 
             this.isPlayed = true;
         }

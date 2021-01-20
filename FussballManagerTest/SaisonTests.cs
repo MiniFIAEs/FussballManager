@@ -30,8 +30,8 @@ namespace FussballManagerTest
             s.Matches.Add(m);
             s.Matches.Add(n);
             s.CalculateDay(1);
-            Assert.IsTrue(s.Matches[0].Home == 0);
-            Assert.IsTrue(s.Matches[0].Visitor == 0);
+            Assert.IsTrue(s.Matches[0].Home == "0");
+            Assert.IsTrue(s.Matches[0].Visitor == "0");
         }
 
         [TestMethod]

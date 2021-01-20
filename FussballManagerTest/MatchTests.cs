@@ -75,8 +75,8 @@ namespace FussballManagerTest
 
             Match m = new(tA,tB);
             m.CalculateResult();
-            Assert.IsTrue(m.Home == 0);
-            Assert.IsTrue(m.Visitor == 0);
+            Assert.IsTrue(m.Home == "0");
+            Assert.IsTrue(m.Visitor == "0");
         }
     }
 }
