@@ -5,7 +5,7 @@ namespace FussballManagerLogic
 {
     public class Player
     {
-        public string Name { get; init; }
+        public string Name { get; set; }
         public byte Speed { get; set; }
         public byte Precision { get; set; }
         public byte Duel { get; set; }
@@ -41,15 +41,14 @@ namespace FussballManagerLogic
 
             using (var reader = new StreamReader("RandomNames.txt"))
             {
-                string name;
-                while ((name = reader.ReadLine()) != null)
+                while ((Name = reader.ReadLine()) != null)
                 {
-                    if (count == r) return name;
+                    if (count == r) return Name;
                     count++;
                 }
             }
 
-            return "";
+            return Name;
         }
     }
 }

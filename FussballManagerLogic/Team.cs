@@ -19,5 +19,17 @@ namespace FussballManagerLogic
             Name = pName;
             Players = new List<Player>();
         }
+
+        public Team(int pPlayerCount)
+        {
+            Name = "NoNamedTeam";
+            Players = new List<Player>(pPlayerCount);
+
+            for (int playerIndex = 0; playerIndex < Players.Capacity; playerIndex++)
+            {
+                Player playerModel = new Player(0, 0, 0, PlayerPositions.Midfield);
+                Players.Add(new Player());
+            }
+        }
     }
 }
