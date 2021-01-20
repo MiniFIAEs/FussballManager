@@ -22,13 +22,14 @@ namespace FussballManagerLogic
 
         public Team(int pPlayerCount)
         {
+            //todo: needed?
             Name = "NoNamedTeam";
             Players = new List<Player>(pPlayerCount);
 
             for (int playerIndex = 0; playerIndex < Players.Capacity; playerIndex++)
             {
                 Player playerModel = new Player(0, 0, 0, PlayerPositions.Midfield);
-                Players.Add(new Player());
+                Players.Add(playerModel);
             }
         }
     }
