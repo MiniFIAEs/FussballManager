@@ -33,7 +33,7 @@ namespace FussballManagerTest
             Player p = new Player("B1", 0, 0, 0, PlayerPositions.Midfield);
             Assert.IsTrue(p.Name == "B1");
             
-            p.GetRandomName();
+            p.Name=Player.GetRandomName();
             Assert.IsTrue(p.Name != "B1");
 
             p = new Player(0, 0, 0, PlayerPositions.Midfield);
