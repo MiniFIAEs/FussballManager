@@ -35,6 +35,7 @@ namespace FussballManagerTest
             foreach (var item in s.Matches)
             {
                 item.CalculateResult();
+                item.IsPlayed = true;
             }
             return s;
         }

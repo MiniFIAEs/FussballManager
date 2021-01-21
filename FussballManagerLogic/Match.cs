@@ -13,7 +13,7 @@ namespace FussballManagerLogic
         {
             get
             {
-                return this.isPlayed ? home : "-";
+                return isPlayed ? home : "-";
             }
             private set { home = value;  }
         }

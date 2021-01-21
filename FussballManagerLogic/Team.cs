@@ -24,7 +24,7 @@ namespace FussballManagerLogic
         public Team(int pPlayerCount)
         {
             //todo: needed?
-            Name = "NoNamedTeam";
+            Name = Player.GetRandomName();
             Players = new List<Player>(pPlayerCount);
 
             for (int playerIndex = 0; playerIndex < Players.Capacity; playerIndex++)

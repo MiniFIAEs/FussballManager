@@ -78,5 +78,17 @@ namespace FussballManagerTest
             Assert.IsTrue(m.Home == "0");
             Assert.IsTrue(m.Visitor == "0");
         }
+
+        [TestMethod]
+        public void HomeGetter()
+        {
+            Match m = new Match();
+            Assert.IsTrue(m.TeamOne.Name == "Auto1");
+            Assert.IsTrue(m.Home == "-");
+
+            Assert.IsTrue(m.IsPlayed == false);
+            m.IsPlayed = true;
+            Assert.IsTrue(m.Home == "0");
+        }
     }
 }
