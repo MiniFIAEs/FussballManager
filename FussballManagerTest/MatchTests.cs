@@ -89,6 +89,49 @@ namespace FussballManagerTest
             Assert.IsTrue(m.IsPlayed == false);
             m.IsPlayed = true;
             Assert.IsTrue(m.Home == "0");
+            m.IsPlayed = false;
+            Assert.IsTrue(m.Home == "-");
+        }
+
+        [TestMethod]
+        public void HomeSetter()
+        {
+            Match m = new Match();
+            Assert.IsTrue(m.Home == "-");
+            string test = m.Home;
+            m.TeamOne.Players.Add(new Player(1,1,1, PlayerPositions.Midfield));
+            m.TeamTwo.Players.Add(new Player(11,11,11, PlayerPositions.Midfield));
+            m.CalculateResult();
+            Assert.IsFalse(test == m.Home);
+            Assert.IsTrue(m.Home == "1");
+        }
+
+        [TestMethod]
+        public void VisitorGetter()
+        {
+            Match m = new Match();
+            Assert.IsTrue(m.TeamTwo.Name == "Auto2");
+            Assert.IsTrue(m.Visitor == "-");
+
+            Assert.IsTrue(m.IsPlayed == false);
+            m.IsPlayed = true;
+            Assert.IsTrue(m.Visitor == "0");
+            m.IsPlayed = false;
+            Assert.IsTrue(m.Visitor == "-");
+        }
+
+        [TestMethod]
+        public void VisitorSetter()
+        {
+            Match m = new Match();
+            Assert.IsTrue(m.Visitor == "-");
+            string test = m.Visitor;
+
+            m.TeamOne.Players.Add(new Player(1,1,1, PlayerPositions.Midfield));
+            m.TeamTwo.Players.Add(new Player(11,11,11, PlayerPositions.Midfield));
+            m.CalculateResult();
+            Assert.IsFalse(test == m.Visitor);
+            Assert.IsTrue(m.Visitor == "0");
         }
     }
 }

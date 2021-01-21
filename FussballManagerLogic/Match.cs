@@ -79,7 +79,7 @@ namespace FussballManagerLogic
 
             if (teamAPerformance < teamBPerformance) Visitor = "1";
 
-            this.isPlayed = true;
+            isPlayed = true;
         }
     }
 }
