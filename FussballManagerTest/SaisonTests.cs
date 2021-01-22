@@ -49,5 +49,25 @@ namespace FussballManagerTest
             //TODO: add assert
 
         }
+        [TestMethod]
+        public void PlayFullSeason()
+        {
+            List<Team> Teams = new List<Team>();
+            for (int counter = 0; counter < 18; counter++)
+                Teams.Add(Helper.CreateTeam());
+
+            Saison s = new();
+            for (int outer = 1; outer < Teams.Count; outer++)
+                for (int inner = 0; inner < Teams.Count; inner++)
+                    s.Matches.Add(new Match(Teams[inner], Teams[(inner + outer) % Teams.Count]) { Day = outer });
+
+            foreach (Match match in s.Matches)
+            {
+                match.CalculateResult();
+            }
+
+            //TODO: add assert
+
+        }
     }
 }
