@@ -1,113 +1,170 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Text.RegularExpressions;
+using BuildIt.Data.Sqlite.Common;
 
 namespace FussballManagerLogic
 {
-    public class DBConnector
+    public class DbConnector
     {
-        private static string row;
-        List<string> fileContent = new List<string>();
-        List<string> names = new List<string>();
-        List<string> foreNames = new List<string>();
+        public List<string> FileContent { get; set; } = new List<string>();
+        public List<string> FirstNames { get; set; } = new List<string>();
+        public List<string> LastNames { get; set; } = new List<string>();
+        public List<string> Names { get; set; } = new List<string>();
 
+        #region Constructor
 
-        public DBConnector()
+        public DbConnector()
         {
-            readTextFile();
-            writeForeNames();
-            writeNames();
+            FileContent = ReadTextFile();
+            
         }
 
-        private void writeNames()
-        {
-            SQLiteConnectionStringBuilder builder = new();
-            builder.DataSource = "names.db";
-            builder.Version = 3;
+        #endregion
 
-            using (SQLiteConnection connection = new SQLiteConnection(builder.ToString()))
+        public void ReadAndFill()
+        {
+            ReadTextFile();
+
+            for (int i = 0; i < FileContent.Count; i++)
             {
-                connection.Open();
-                SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "Insert into names (foreName) Values (@foreName)";
-                
-                foreach (var item in foreNames)
-                {
-                    command.Parameters.Clear();
-                    command.Parameters.AddWithValue("foreName", item);
-                    command.ExecuteNonQuery();
-                }
+                // TODO:Datenbank bekommt keine einträge (#Methoden laufen ohne Fehler durch)
+                //WriteNames(NamensArt.FirstName, FileContent[i]);
+                //WriteNames(NamensArt.LastName, FileContent[i]);
+                WriteNamesToDb(NamensArt.FirstName, FileContent[i]);
+                WriteNamesToDb(NamensArt.LastName, FileContent[i]);
             }
         }
 
 
-        private void writeForeNames()
+        
+        private void WriteNames(Enum pNamen, string pItem)
         {
             SQLiteConnectionStringBuilder builder = new();
-            builder.DataSource = "names.db";
+            builder.DataSource = "fmNames.db";
             builder.FailIfMissing = true;
             builder.Version = 3;
 
-            using (SQLiteConnection connection = new SQLiteConnection(builder.ToString()))
-            {
-                
-                connection.Open();
-                SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "Insert into names (name) Values (@name)";
-                //ich schau wo was wie passiert
-                foreach (var item in foreNames)
-                {//daten sind nicht korrekt vorformatiert 1000stck namen sinds also hat er erst vor dann namen...
+            using SQLiteConnection connection = new SQLiteConnection(builder.ToString());
+            connection.Open();
+            SQLiteCommand command = connection.CreateCommand();
 
+            command.CommandText = pNamen switch
+            {
+                NamensArt.FirstName => "Insert into firstNames (FirstName) Values ( @name)",
+                NamensArt.LastName => "Insert into lastNames (lastName) Values ( @name)",
+                NamensArt.FullName => "Insert into firstNames (FirstName) Values ( @name)",
+                _ => ""
+            };
+            
+            command.Parameters.AddWithValue("name", pItem);
+            command.ExecuteNonQuery();
+        }
+
+
+        private void WriteNamesToDb(Enum pNamen, string pItem)
+        {
+            SQLiteConnectionStringBuilder builder = new();
+            builder.DataSource = "fmNames";
+            builder.Version = 3;
+
+            using SQLiteConnection connection = new SQLiteConnection(builder.ToString());
+            connection.Open();
+
+            SQLiteCommand command = connection.CreateCommand();
+            SQLiteTransaction trans = connection.BeginTransaction();
+            command.Transaction = trans;
+            for (int i = 1; i <= FirstNames.Count; i++)
+            {
+                try
+                {
                     command.Parameters.Clear();
-                    command.Parameters.AddWithValue("name", item);
+                    command.Parameters.AddWithValue("name", FirstNames[i - 1]);
+                    // SQL Query dem Objekt übergeben
+                    command.CommandText = pNamen switch
+                    {
+                        NamensArt.FirstName => "Insert into firstNames (FirstName) Values ( @name)",
+                        NamensArt.LastName => "Insert into lastNames (lastName) Values ( @name)",
+                        NamensArt.FullName => "Insert into firstNames (FirstName) Values ( @name)",
+                        _ => ""
+                    };
+
                     command.ExecuteNonQuery();
                 }
+                catch
+                {
+                    return;
+                }
             }
-        }// ich pushe nur die db. und für mein grundsystem nehm ich mir deveoper
 
+            trans.Commit();
+        }
 
-        private void readTextFile()
+        #region Text vorbehandeln
+
+        private List<string> ReadTextFile()
         {
+            string row;
             using (var reader = new StreamReader(@"RandomNames.txt"))
             {
                 while ((row = (reader.ReadLine())) != null)
                 {
-                    fileContent.AddRange(new[] {row});
+                    FileContent.Add(row);
                 }
             }
 
-            formatNames();
+            FileContent = FormatNames(NamensArt.FullName);
+            FirstNames = FormatNames(NamensArt.FirstName);
+            LastNames = FormatNames(NamensArt.LastName);
+
+            return FileContent;
         }
 
 
-        private void formatNames()
+        private List<string> FormatNames(Enum pNamen)
         {
-            System.Text.RegularExpressions.Match match;
-
-            string pattern = @"([A-Za-z]+)";
-            MatchesOfPattern(pattern);
-
-            pattern = @"([A-Za-z]+)";
-            MatchesOfPattern(pattern);
-        }
-
-
-        private void MatchesOfPattern(string pattern)
-        {
-            System.Text.RegularExpressions.Match match;
-            foreach (string item in fileContent)
+            string pattern;
+            switch (pNamen)
             {
-                pattern = @"([A-Za-z]+)";
-                match = Regex.Match(item, pattern);
-                foreNames.Add(match.Value.Substring(0, match.Value.Length - 1));
+                case NamensArt.FirstName:
+                    pattern = @"([A-Za-z]+)";
+                    return MatchesOfPattern(pattern, FirstNames = new List<string>(), 0);
 
-                pattern = @"(_[A-Za-z]+)";
-                match = Regex.Match(item, pattern);
-                names.Add(match.Value.Substring(1, match.Value.Length - 1));
+                case NamensArt.LastName:
+                    pattern = @"(_[A-Za-z]+)";
+                    return MatchesOfPattern(pattern, LastNames = new List<string>(), 1);
+
+                default:
+                    return FileContent;
             }
+
         }
+
+
+        private List<string> MatchesOfPattern(string pPattern, List<string> pNameList, int pStartIndex)
+        {
+            System.Text.RegularExpressions.Match match;
+
+            foreach (string item in FileContent)
+            {
+                match = Regex.Match(item, pPattern);
+                pNameList.Add(match.Value.Substring(pStartIndex, match.Value.Length - pStartIndex));
+            }
+
+            return pNameList;
+        }
+
+        #endregion
+    }
+
+    enum NamensArt
+    {
+        FirstName,
+        LastName,
+        FullName
     }
 }
