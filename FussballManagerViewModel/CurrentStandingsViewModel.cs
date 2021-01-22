@@ -20,7 +20,14 @@ namespace FussballManagerViewModel
         public int Day
         {
             get { return _day; }
-            set { _day = value; }
+            set
+            {
+                if (_day != value)
+                {
+                    _day = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Day)));
+                }
+            }
         }
 
         public ObservableCollection<Standing> EntryList
