@@ -12,28 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using FussballManagerLogic;
+using FussballManagerViewModel;
 
 namespace FussballManagerUI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaktionslogik für CurrentStandingsPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CurrentStandingsPage : Page
     {
-        public MainWindow()
+        public CurrentStandingsPage()
         {
             InitializeComponent();
-        }
-
-        private void currentSeason_Click(object sender, RoutedEventArgs e)
-        {
-            frmContent.Navigate(new CurrentSeasonPage(DataContext));
-        }
-
-        private void currentStandings_Click(object sender, RoutedEventArgs e)
-        {
-            frmContent.Navigate(new CurrentStandingsPage());
+            DataContext = new CurrentStandingsViewModel();
         }
     }
 }

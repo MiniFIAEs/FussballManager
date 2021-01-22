@@ -22,6 +22,7 @@
         <TextBlock Text="Fussball Manager" FontSize="30" FontWeight="Bold" FontFamily="Segoe UI" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="10" />
         <StackPanel Grid.Row="1" Grid.Column="0">
             <Button Content="Aktuelle Saison" Click="currentSeason_Click" />
+            <Button Content="Aktuelle Tabelle" Click="currentStandings_Click" />
         </StackPanel>
         <Frame x:Name="frmContent" Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden" />
     </Grid>
