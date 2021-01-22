@@ -45,7 +45,7 @@ namespace FussballManagerTest
         {
             Team t = new Team(11);
 
-            Assert.IsFalse(t.Players[0].Name != t.Players[1].Name);
+            Assert.IsFalse(t.Players[0].Name == t.Players[1].Name);
         }
     }
 }

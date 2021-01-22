@@ -24,6 +24,8 @@ namespace FussballManagerUI
         public MainWindow()
         {
             InitializeComponent();
+            DbConnector db = new DbConnector();
+            
         }
 
         private void currentSeason_Click(object sender, RoutedEventArgs e)
