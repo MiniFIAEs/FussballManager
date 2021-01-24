@@ -31,7 +31,7 @@ namespace FussballManagerLogic
 
             // create dummy list
 
-            List<Standing> returnList = new()
+            /*List<Standing> returnList = new()
             {
                 new Standing() { TeamObject = new Team("Team 1"), Games = 15, Points = 15, GoalsHome = 20, GoalsVisitor = 10, GoalsDifference = 10, Won = 5, Draw = 5, Lost = 5 },
                 new Standing() { TeamObject = new Team("Team 2"), Games = 15, Points = 15, GoalsHome = 20, GoalsVisitor = 10, GoalsDifference = 10, Won = 5, Draw = 5, Lost = 5 },
@@ -53,7 +53,9 @@ namespace FussballManagerLogic
                 new Standing() { TeamObject = new Team("Team 18"), Games = 15, Points = 15, GoalsHome = 20, GoalsVisitor = 10, GoalsDifference = 10, Won = 5, Draw = 5, Lost = 5 }
             };
 
-            return returnList;
+            return returnList; */
+
+            return Database.GetStandingsFromDatabase(day);
         }
     }
 }
