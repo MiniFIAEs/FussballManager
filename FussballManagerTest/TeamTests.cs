@@ -41,5 +41,15 @@ namespace FussballManagerTest
             t.Players[1] = new Player("NamedPlayer", 0,0,0, PlayerPositions.Midfield);
             Assert.IsTrue(t.Players[1].Name == "NamedPlayer");
         }
+
+        [TestMethod]
+        public void SaveTeamToDatabase()
+        {
+            Team t = Helper.CreateTeam();
+            Assert.IsNotNull(t);
+            Database.SaveTeamToDatabase(t);
+
+            //TODO: assert
+        }
     }
 }
