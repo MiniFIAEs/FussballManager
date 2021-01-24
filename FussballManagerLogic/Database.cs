@@ -112,5 +112,42 @@ namespace FussballManagerLogic
             }
             return true;
         }
+
+        public static List<Standing> GetStandingsFromDatabase(int day)
+        {
+            SQLiteConnectionStringBuilder builder = new();
+            builder.Version = 3;
+            builder.DataSource = "GameDatabase.db";
+
+            List<Standing> Standings = new List<Standing>();
+
+            using (SQLiteConnection connection = new(builder.ToString()))
+            {
+                connection.Open();
+                SQLiteCommand command = connection.CreateCommand();
+                command.CommandText = "select TeamOne, TeamTwo, Home, Visitor from Season where Day <= @Day;"; //TODO: sql command
+                command.Parameters.AddWithValue("@Day", day);
+
+                using (SQLiteDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.KeyInfo))
+                {
+                    while (reader.Read())
+                    {
+                        Standings.Add(new Standing() //TODO: insert correct values
+                        {
+                            TeamName = reader.GetString(1),
+                            Games = day,
+                            Points = reader.GetInt32(4),
+                            GoalsHome = reader.GetInt32(4),
+                            GoalsVisitor = reader.GetInt32(4),
+                            GoalsDifference = reader.GetInt32(4),
+                            Won = reader.GetInt32(4),
+                            Draw = reader.GetInt32(4),
+                            Lost = reader.GetInt32(4)
+                        });
+                    }
+                }
+            }
+            return Standings;
+        }
     }
 }
