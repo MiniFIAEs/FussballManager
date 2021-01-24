@@ -125,7 +125,11 @@ namespace FussballManagerLogic
             {
                 connection.Open();
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "select TeamOne, TeamTwo, Home, Visitor from Season where Day <= @Day;"; //TODO: sql command
+                command.CommandText = "SELECT TeamOne, SUM(Home) AS SumHome, SUM(Visitor) AS SumVisitor, " +
+                    "((SELECT COUNT (*) FROM Season WHERE Home > Visitor AND O.TeamOne = TeamOne)   +   (SELECT COUNT (*) FROM Season WHERE Home < Visitor AND O.TeamTwo = TeamOne)) AS TWon, " +
+                    "(SELECT COUNT (*) FROM Season WHERE Home = Visitor AND O.TeamOne = TeamOne OR Home = Visitor AND O.TeamOne = TeamTwo) AS TDraw, " +
+                    "((SELECT COUNT (*) FROM Season WHERE Home < Visitor AND O.TeamOne = TeamOne)   +   (SELECT COUNT (*) FROM Season WHERE Home > Visitor AND O.TeamTwo = TeamOne)) AS TLost " +
+                    "FROM Season O GROUP BY TeamOne;"; //TODO: sql command correctness
                 command.Parameters.AddWithValue("@Day", day);
 
                 using (SQLiteDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.KeyInfo))
@@ -134,15 +138,15 @@ namespace FussballManagerLogic
                     {
                         Standings.Add(new Standing() //TODO: insert correct values
                         {
-                            TeamName = reader.GetString(1),
+                            TeamName = (string)reader["TeamOne"],
                             Games = day,
-                            Points = reader.GetInt32(4),
-                            GoalsHome = reader.GetInt32(4),
-                            GoalsVisitor = reader.GetInt32(4),
-                            GoalsDifference = reader.GetInt32(4),
-                            Won = reader.GetInt32(4),
-                            Draw = reader.GetInt32(4),
-                            Lost = reader.GetInt32(4)
+                            Points = (Convert.ToInt32(reader["TWon"]) * 3) + Convert.ToInt32(reader["TDraw"]),
+                            GoalsHome = Convert.ToInt32(reader["SumHome"]),
+                            GoalsVisitor = Convert.ToInt32(reader["SumVisitor"]),
+                            GoalsDifference = Convert.ToInt32(reader["SumHome"]) - Convert.ToInt32(reader["SumVisitor"]),
+                            Won = Convert.ToInt32(reader["TWon"]),
+                            Draw = Convert.ToInt32(reader["TDraw"]),
+                            Lost = Convert.ToInt32(reader["TLost"])
                         });
                     }
                 }
