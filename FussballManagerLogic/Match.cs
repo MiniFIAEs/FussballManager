@@ -20,6 +20,7 @@ namespace FussballManagerLogic
         {
             TeamOne = pTeamOne;
             TeamTwo = pTeamTwo;
+            Home = -1; // Home -1 == match not played
         }
 
         public void CalculateResult()
