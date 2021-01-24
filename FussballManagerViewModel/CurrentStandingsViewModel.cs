@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using FussballManagerLogic;
+using FussballManagerTest;
 
 namespace FussballManagerViewModel
 {
@@ -15,7 +16,15 @@ namespace FussballManagerViewModel
         private ObservableCollection<Standing> entries;
         public CurrentStandingsViewModel()
         {
-            entries = new ObservableCollection<Standing>(Saison.GetStanding(_day));
+            // create dummy teams and save in database
+            //Team t = Helper.CreateTeam();
+            //Database.SaveTeamToDatabase(t);
+
+            //create dummy season and save in database
+            Saison dummySeason = Helper.CreateAndPlaySeason();
+            Database.SaveSeasonToDatabase(dummySeason);
+
+            entries = new ObservableCollection<Standing>(Saison.GetStanding(_day)); //get dummy list //TODO: GetStanding() get data from database
         }
         public int Day
         {
