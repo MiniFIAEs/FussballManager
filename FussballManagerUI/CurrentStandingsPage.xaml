@@ -32,7 +32,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding TeamObject.Name}" Width="150"/>
+                        <TextBlock Text="{Binding TeamName}" Width="150"/>
                         <TextBlock Text="{Binding Points}" Width="60"/>
                         <TextBlock Text="{Binding Games}" Width="60"/>
                         <TextBlock Text="{Binding GoalsHome}" Width="40"/>
