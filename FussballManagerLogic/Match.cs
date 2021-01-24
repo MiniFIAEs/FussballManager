@@ -41,6 +41,8 @@ namespace FussballManagerLogic
                 teamBPerformance += item.Duel;
             }
 
+            Home = 0; // default -1 game not played
+
             if (teamAPerformance > teamBPerformance) Home = 1;
 
             if (teamAPerformance < teamBPerformance) Visitor = 1;
