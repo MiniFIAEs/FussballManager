@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FussballManagerLogic\FussballManagerLogic.csproj" />
+    <ProjectReference Include="..\FussballManagerTest\FussballManagerTest.csproj" />
   </ItemGroup>
 
 </Project>
