@@ -126,10 +126,10 @@ namespace FussballManagerLogic
                 connection.Open();
                 SQLiteCommand command = connection.CreateCommand();
                 command.CommandText = "SELECT TeamOne, SUM(Home) AS SumHome, SUM(Visitor) AS SumVisitor, " +
-                    "((SELECT COUNT (*) FROM Season WHERE Home > Visitor AND O.TeamOne = TeamOne)   +   (SELECT COUNT (*) FROM Season WHERE Home < Visitor AND O.TeamTwo = TeamOne)) AS TWon, " +
-                    "(SELECT COUNT (*) FROM Season WHERE Home = Visitor AND O.TeamOne = TeamOne OR Home = Visitor AND O.TeamOne = TeamTwo) AS TDraw, " +
-                    "((SELECT COUNT (*) FROM Season WHERE Home < Visitor AND O.TeamOne = TeamOne)   +   (SELECT COUNT (*) FROM Season WHERE Home > Visitor AND O.TeamTwo = TeamOne)) AS TLost " +
-                    "FROM Season O GROUP BY TeamOne;"; //TODO: sql command correctness
+                    "((SELECT COUNT (*) FROM Season WHERE Home > Visitor AND O.TeamOne = TeamOne AND Day <= @Day)   +   (SELECT COUNT (*) FROM Season WHERE Home < Visitor AND O.TeamTwo = TeamOne AND Day <= @Day)) AS TWon, " +
+                    "(SELECT COUNT (*) FROM Season WHERE Home = Visitor AND O.TeamOne = TeamOne AND Day <= @Day OR Home = Visitor AND O.TeamOne = TeamTwo AND Day <= @Day) AS TDraw, " +
+                    "((SELECT COUNT (*) FROM Season WHERE Home < Visitor AND O.TeamOne = TeamOne AND Day <= @Day)   +   (SELECT COUNT (*) FROM Season WHERE Home > Visitor AND O.TeamTwo = TeamOne AND Day <= @Day)) AS TLost " +
+                    "FROM Season O WHERE Day <= @Day GROUP BY TeamOne;"; //TODO: sql command correctness
                 command.Parameters.AddWithValue("@Day", day);
 
                 using (SQLiteDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.KeyInfo))
