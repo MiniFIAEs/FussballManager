@@ -97,7 +97,7 @@ namespace FussballManagerLogic
                 foreach (Match match in saison.Matches)
                 {
                     command.Parameters.AddWithValue("@TeamOne", match.TeamOne.Name);
-                    command.Parameters.AddWithValue("@TeamTwo", match.TeamOne.Name);
+                    command.Parameters.AddWithValue("@TeamTwo", match.TeamTwo.Name);
                     command.Parameters.AddWithValue("@Day", match.Day);
                     command.Parameters.AddWithValue("@Home", match.Home);
                     command.Parameters.AddWithValue("@Visitor", match.Visitor);
