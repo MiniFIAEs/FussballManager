@@ -21,7 +21,7 @@ namespace FussballManagerTest
             team.Players.Add(new Player("BB", 50, 50, 50, PlayerPositions.Attack));
             return team;
         }
-        public static Saison CreateSeason()
+        public static Saison CreateSeason() //TODO: correct season
         {
             List<Team> Teams = new List<Team>();
             for (int counter = 0; counter < 18; counter++)
@@ -34,7 +34,7 @@ namespace FussballManagerTest
 
             return s;
         }
-        public static Saison CreateAndPlaySeason()
+        public static Saison CreateAndPlaySeason() //TODO: correct season
         {
             List<Team> Teams = new List<Team>();
             for (int counter = 0; counter < 18; counter++)
