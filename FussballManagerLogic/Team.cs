@@ -5,12 +5,12 @@ namespace FussballManagerLogic
     public class Team
     {
         public string Name { get; init; }
-        private List<Player> players;
+        private List<Player> _players;
 
         public List<Player> Players
         {
-            get => players;
-            set => players = value;
+            get => _players;
+            set => _players = value;
         }
 
 

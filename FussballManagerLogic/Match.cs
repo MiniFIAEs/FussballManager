@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FussballManagerLogic
+﻿namespace FussballManagerLogic
 {
     public class Match
     {

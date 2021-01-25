@@ -1,5 +1,4 @@
 using FussballManagerLogic;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FussballManagerTest

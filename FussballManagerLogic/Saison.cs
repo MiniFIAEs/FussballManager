@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace FussballManagerLogic
 {
@@ -15,11 +11,11 @@ namespace FussballManagerLogic
             Matches = new List<Match>();
         }
 
-        public void CalculateDay(int v)
+        public void CalculateDay(int pMatchDay)
         {
             foreach (var item in Matches)
             {
-                if (item.Day == v)
+                if (item.Day == pMatchDay)
                 {
                     item.CalculateResult();
                 }

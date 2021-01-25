@@ -60,7 +60,6 @@ namespace FussballManagerTest
         [TestMethod]
         public void BuilderDb()
         {
-            DbConnector db = new DbConnector();
             var builder = new SQLiteConnectionStringBuilder();
             builder.DataSource= "fmNames.db";
             builder.Version = 3;

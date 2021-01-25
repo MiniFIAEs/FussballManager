@@ -1,5 +1,4 @@
 using FussballManagerLogic;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -37,14 +36,14 @@ namespace FussballManagerTest
         [TestMethod]
         public void FullSeason()
         {
-            List<Team> Teams = new List<Team>();
+            List<Team> teams = new List<Team>();
             for (int counter = 0; counter < 18; counter++)
-                Teams.Add(Helper.CreateTeam());
+                teams.Add(Helper.CreateTeam());
 
             Saison s = new();
-            for (int outer = 1; outer < Teams.Count; outer++)
-                for (int inner = 0; inner < Teams.Count; inner++)
-                    s.Matches.Add(new Match(Teams[inner], Teams[(inner + outer) % Teams.Count]) {Day = outer});
+            for (int outer = 1; outer < teams.Count; outer++)
+                for (int inner = 0; inner < teams.Count; inner++)
+                    s.Matches.Add(new Match(teams[inner], teams[(inner + outer) % teams.Count]) {Day = outer});
 
             //TODO: add assert
 

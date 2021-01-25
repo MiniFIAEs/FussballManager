@@ -5,9 +5,9 @@ namespace FussballManagerTest
 {
     public class Helper
     {
-        public static Team CreateTeam(string Name = "NoNamedTeam")
+        public static Team CreateTeam(string pName = "NoNamedTeam")
         {
-            Team result = new(Name);
+            Team result = new(pName);
             result.Players.Add(new Player("B1", 50, 50, 50, PlayerPositions.Keeper));
             result.Players.Add(new Player("B2", 50, 50, 50, PlayerPositions.Defence));
             result.Players.Add(new Player("B3", 50, 50, 50, PlayerPositions.Defence));
@@ -23,14 +23,14 @@ namespace FussballManagerTest
         }
         public static Saison CreateSeason()
         {
-            List<Team> Teams = new List<Team>();
+            List<Team> teams = new List<Team>();
             for (int counter = 0; counter < 18; counter++)
-                Teams.Add(Helper.CreateTeam());
+                teams.Add(Helper.CreateTeam());
 
             Saison s = new();
-            for (int outer = 1; outer < Teams.Count; outer++)
-                for (int inner = 0; inner < Teams.Count; inner++)
-                    s.Matches.Add(new Match(Teams[inner], Teams[(inner + outer) % Teams.Count]) { Day = outer });
+            for (int outer = 1; outer < teams.Count; outer++)
+                for (int inner = 0; inner < teams.Count; inner++)
+                    s.Matches.Add(new Match(teams[inner], teams[(inner + outer) % teams.Count]) { Day = outer });
 
             return s;
         }

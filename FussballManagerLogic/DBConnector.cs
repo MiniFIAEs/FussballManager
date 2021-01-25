@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Threading;
-using BuildIt.Data.Sqlite.Common;
 
 namespace FussballManagerLogic
 {
@@ -119,8 +115,6 @@ namespace FussballManagerLogic
         #endregion
 
 
-        
-
         #region Text vorbehandeln
 
         private void ReadTextFile()
@@ -147,16 +141,16 @@ namespace FussballManagerLogic
 
         private List<string> FormatNames(Enum pNamen, string pItem)
         {
-            string pPattern;
+            string pattern;
             switch (pNamen)
             {
                 case NamensArt.FirstName:
-                    pPattern = @"([A-Za-z]+)";
-                    return MatchesOfPattern(pPattern, pItem, FirstNames, 0);
+                    pattern = @"([A-Za-z]+)";
+                    return MatchesOfPattern(pattern, pItem, FirstNames, 0);
 
                 case NamensArt.LastName:
-                    pPattern = @"(_[A-Za-z]+)";
-                    return MatchesOfPattern(pPattern, pItem, LastNames, 1);
+                    pattern = @"(_[A-Za-z]+)";
+                    return MatchesOfPattern(pattern, pItem, LastNames, 1);
 
                 default:
                     return FileContent;
