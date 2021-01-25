@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 using BuildIt.Data.Sqlite.Common;
 
 namespace FussballManagerLogic
@@ -14,99 +15,115 @@ namespace FussballManagerLogic
         public List<string> FileContent { get; set; } = new List<string>();
         public List<string> FirstNames { get; set; } = new List<string>();
         public List<string> LastNames { get; set; } = new List<string>();
-        public List<string> Names { get; set; } = new List<string>();
 
         #region Constructor
 
         public DbConnector()
         {
-            FileContent = ReadTextFile();
-            
+            ReadTextFile();
+            SplitNames();
+            Save();
         }
 
         #endregion
 
-        public void ReadAndFill()
-        {
-            ReadTextFile();
+        #region Copy
 
-            for (int i = 0; i < FileContent.Count; i++)
-            {
-                // TODO:Datenbank bekommt keine einträge (#Methoden laufen ohne Fehler durch)
-                //WriteNames(NamensArt.FirstName, FileContent[i]);
-                //WriteNames(NamensArt.LastName, FileContent[i]);
-                WriteNamesToDb(NamensArt.FirstName, FileContent[i]);
-                WriteNamesToDb(NamensArt.LastName, FileContent[i]);
-            }
-        }
-
-
-        
-        private void WriteNames(Enum pNamen, string pItem)
+        public void Save()
         {
             SQLiteConnectionStringBuilder builder = new();
+            builder.Version = 3;
             builder.DataSource = "fmNames.db";
-            builder.FailIfMissing = true;
-            builder.Version = 3;
 
-            using SQLiteConnection connection = new SQLiteConnection(builder.ToString());
-            connection.Open();
-            SQLiteCommand command = connection.CreateCommand();
-
-            command.CommandText = pNamen switch
+            using (SQLiteConnection con = new(builder.ToString()))
             {
-                NamensArt.FirstName => "Insert into firstNames (FirstName) Values ( @name)",
-                NamensArt.LastName => "Insert into lastNames (lastName) Values ( @name)",
-                NamensArt.FullName => "Insert into firstNames (FirstName) Values ( @name)",
-                _ => ""
-            };
-            
-            command.Parameters.AddWithValue("name", pItem);
-            command.ExecuteNonQuery();
-        }
+                con.Open();
+                // check if new db-file or existing
 
-
-        private void WriteNamesToDb(Enum pNamen, string pItem)
-        {
-            SQLiteConnectionStringBuilder builder = new();
-            builder.DataSource = "fmNames";
-            builder.Version = 3;
-
-            using SQLiteConnection connection = new SQLiteConnection(builder.ToString());
-            connection.Open();
-
-            SQLiteCommand command = connection.CreateCommand();
-            SQLiteTransaction trans = connection.BeginTransaction();
-            command.Transaction = trans;
-            for (int i = 1; i <= FirstNames.Count; i++)
-            {
-                try
+                var command = con.CreateCommand();
+                command.CommandText = "SELECT count(*) FROM sqlite_master";
+                var result = command.ExecuteScalar();
+                if ((Int64) result == 0)
                 {
-                    command.Parameters.Clear();
-                    command.Parameters.AddWithValue("name", FirstNames[i - 1]);
-                    // SQL Query dem Objekt übergeben
-                    command.CommandText = pNamen switch
-                    {
-                        NamensArt.FirstName => "Insert into firstNames (FirstName) Values ( @name)",
-                        NamensArt.LastName => "Insert into lastNames (lastName) Values ( @name)",
-                        NamensArt.FullName => "Insert into firstNames (FirstName) Values ( @name)",
-                        _ => ""
-                    };
+                    // tabelle neu aufbauen
+                    command.CommandText = "create table FirstNames (ID int not null, firstName varchar(50) ) ";
+
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = "create table LastNames (ID int not null, lastName varchar(50) ) ";
 
                     command.ExecuteNonQuery();
                 }
-                catch
+
+                int row = 0;
+                foreach (var item in FirstNames)
                 {
-                    return;
+                    command.CommandText = "insert into FirstNames values (@row, @fname);";
+                    command.Parameters.AddWithValue("fName", item);
+                    command.Parameters.AddWithValue("row", row);
+                    command.ExecuteNonQuery();
+                    row++;
+                }
+
+                row = 0;
+                foreach (var item in LastNames)
+                {
+                    command.CommandText = "insert into LastNames values (@row, @lname);";
+                    command.Parameters.AddWithValue("lName", item);
+                    command.Parameters.AddWithValue("row", row);
+
+                    command.ExecuteNonQuery();
+                    row++;
+                }
+            }
+        }
+
+        public List<string> Load()
+        {
+            SQLiteConnectionStringBuilder builder = new();
+            builder.Version = 3;
+            builder.DataSource = "fmNames.db";
+
+            List<string> resultList = new();
+            using (SQLiteConnection con = new(builder.ToString()))
+            {
+                con.Open();
+                var command = con.CreateCommand();
+                // check if new db-file or existing
+                command.CommandText = "SELECT count(*) FROM sqlite_master";
+                var result = command.ExecuteScalar();
+                if ((Int64) result != 0)
+                {
+                    command.CommandText = "select firstName from firstNames order by firstName;";
+                    using var reader = command.ExecuteReader();
+
+                    int count = 0;
+                    while (reader.Read())
+                    {
+                        resultList.Add(reader.IsDBNull(0) ? "" : reader.GetString(0));
+                        count++;
+                    }
+
+                    command.CommandText = "select lastName from lastNames order by lastName;";
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        resultList[i] += " " + (reader.IsDBNull(0) ? "" : reader.GetString(0));
+                    }
                 }
             }
 
-            trans.Commit();
+            return resultList;
         }
+
+        #endregion
+
+
+        
 
         #region Text vorbehandeln
 
-        private List<string> ReadTextFile()
+        private void ReadTextFile()
         {
             string row;
             using (var reader = new StreamReader(@"RandomNames.txt"))
@@ -116,44 +133,43 @@ namespace FussballManagerLogic
                     FileContent.Add(row);
                 }
             }
+        }
 
-            FileContent = FormatNames(NamensArt.FullName);
-            FirstNames = FormatNames(NamensArt.FirstName);
-            LastNames = FormatNames(NamensArt.LastName);
-
-            return FileContent;
+        private void SplitNames()
+        {
+            for (int i = 0; i < FileContent.Count; i++)
+            {
+                FirstNames = FormatNames(NamensArt.FirstName, FileContent[i]);
+                LastNames = FormatNames(NamensArt.LastName, FileContent[i]);
+            }
         }
 
 
-        private List<string> FormatNames(Enum pNamen)
+        private List<string> FormatNames(Enum pNamen, string pItem)
         {
-            string pattern;
+            string pPattern;
             switch (pNamen)
             {
                 case NamensArt.FirstName:
-                    pattern = @"([A-Za-z]+)";
-                    return MatchesOfPattern(pattern, FirstNames = new List<string>(), 0);
+                    pPattern = @"([A-Za-z]+)";
+                    return MatchesOfPattern(pPattern, pItem, FirstNames, 0);
 
                 case NamensArt.LastName:
-                    pattern = @"(_[A-Za-z]+)";
-                    return MatchesOfPattern(pattern, LastNames = new List<string>(), 1);
+                    pPattern = @"(_[A-Za-z]+)";
+                    return MatchesOfPattern(pPattern, pItem, LastNames, 1);
 
                 default:
                     return FileContent;
             }
-
         }
 
 
-        private List<string> MatchesOfPattern(string pPattern, List<string> pNameList, int pStartIndex)
+        private List<string> MatchesOfPattern(string pPattern, string pItem, List<string> pNameList, int pStartIndex)
         {
             System.Text.RegularExpressions.Match match;
 
-            foreach (string item in FileContent)
-            {
-                match = Regex.Match(item, pPattern);
-                pNameList.Add(match.Value.Substring(pStartIndex, match.Value.Length - pStartIndex));
-            }
+            match = Regex.Match(pItem, pPattern);
+            pNameList.Add(match.Value.Substring(pStartIndex, match.Value.Length - pStartIndex));
 
             return pNameList;
         }

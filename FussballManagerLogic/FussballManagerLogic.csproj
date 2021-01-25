@@ -11,9 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="fmNames.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="fmNames">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
