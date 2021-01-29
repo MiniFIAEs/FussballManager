@@ -34,37 +34,59 @@ namespace FussballManagerTest
 
             return s;
         }
-        public static Saison CreateAndPlaySeason() //TODO: optimize loops
+        public static Saison CreateAndPlaySeason() //TODO: complete matching, optimize loops, find bugs, matching based on official rules
         {
             List<Team> Teams = new List<Team>();
             for (int counter = 0; counter < 18; counter++)
                 Teams.Add(Helper.CreateTeam("Team_" + counter));
 
             Saison s = new();
+            int[] toprow = new int[8] { 0, 1, 2, 3, 4, 5, 6, 7};
+            int[] buttomrow = new int[8] { 16, 15, 14, 13, 12, 11, 10, 9 };
 
-            int day = 1;
-            bool sw = true;
+            int[] left = new int[2] { -1, -1 };
+            int[] right = new int[2] { 8, 17 };
 
-            for (int offset = 1; offset <= (Teams.Count - 1) * 2; offset += 2)
+            for (int loop = 0; loop < 17; loop++)
             {
-                for (int home = 0; home < Teams.Count; home += 2)
+                for (int i = 0; i < 8; i++)
                 {
-                    if (sw) // switch home and visitor (day1: teamA = home, day2: teamA = visitor, day3: teamA = home, ...)
-                    {
-                        s.Matches.Add(new Match(Teams[home], Teams[(home + offset) % Teams.Count]) { Day = day });
-                        s.Matches.Add(new Match(Teams[(home + offset) % Teams.Count], Teams[home]) { Day = day + 17 }); // second half of the season
-                    }
-                    else
-                    {
-                        s.Matches.Add(new Match(Teams[(home + offset) % Teams.Count], Teams[home]) { Day = day });
-                        s.Matches.Add(new Match(Teams[home], Teams[(home + offset) % Teams.Count]) { Day = day + 17 });
-                    }
+                    s.Matches.Add(new Match(Teams[toprow[i]], Teams[buttomrow[i]]) { Day = (toprow[i] + 1 + buttomrow[i] + 1) % 17});
                 }
-                sw = !sw;
-                day++;
+
+                if (left[0] == -1) // left side "empty"
+                {
+                    s.Matches.Add(new Match(Teams[right[0]], Teams[right[1]]) { Day = (right[0] + 1 + right[1] + 1) % 17 });
+
+                    left[0] = right[1];
+                    left[1] = toprow[0];
+
+                    for (int i = 1; i < 8; i++)
+                    {
+                        toprow[i - 1] = toprow[i];
+                    }
+                    toprow[7] = right[0];
+
+                    right[0] = -1; // set right side to "empty"
+                }
+                else // right side "empty"
+                {
+                    s.Matches.Add(new Match(Teams[left[0]], Teams[left[1]]) { Day = (left[0] + 1 + left[1] + 1) % 17 });
+
+                    right[0] = buttomrow[7];
+                    right[1] = left[0];
+
+                    for (int i = 7; i > 0; i--)
+                    {
+                        buttomrow[i] = buttomrow[i - 1];
+                    }
+                    buttomrow[0] = left[1];
+
+                    left[0] = -1; // set left side to "empty"
+                }
             }
 
-            foreach(Match match in s.Matches)
+            foreach (Match match in s.Matches)
             {
                 match.CalculateResult();
             }
