@@ -4,9 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FussballManagerUI"
+      xmlns:logic="clr-namespace:FussballManagerLogic;assembly=FussballManagerLogic"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CurrentSeasonPage">
+
+    <Page.DataContext>
+        <logic:Saison></logic:Saison>
+    </Page.DataContext>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -40,25 +45,26 @@
                   Grid.RowSpan="2"
                   Margin="0,0,10,10"
                   ItemsSource="{Binding Matches}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding TeamOne.Name}" Width="200"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding TeamOne.Name}" Width="200"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
         <Grid Grid.Row="1"
               Grid.Column="4"
               Grid.RowSpan="2"
               Margin="0,0,0,10" 
               >
-            <StackPanel Orientation="Vertical" Height="Auto">
-                <StackPanel.Resources>
-                    <Style x:Key="StyleLabel" TargetType="Label">
-                        <Setter Property="Content" Value="{Binding TeamOne.Name}"></Setter>
+            <StackPanel Orientation="Vertical" Height="Auto" >
+                <StackPanel.Resources  >
+                    <Style x:Key="StyleLabel" TargetType="Label" >
+                        <!--TODO:Scorebinding-->
+                        <Setter Property="Content" Value="{Binding Matches[Grid.Row].Home}"></Setter>
                         <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                         <Setter Property="FontFamily" Value="Gill Sans"></Setter>
                         <Setter Property="FontSize" Value="15"></Setter>
                         <Setter Property="Foreground" Value="DarkSeaGreen"></Setter>
@@ -68,7 +74,7 @@
                     </Style>
                 </StackPanel.Resources>
 
-                
+
                 <Label Style="{StaticResource StyleLabel}"></Label>
                 <Label Style="{StaticResource StyleLabel}"></Label>
                 <Label Style="{StaticResource StyleLabel}"></Label>
@@ -126,9 +132,33 @@
                   Grid.RowSpan="2"
                   Margin="0,0,0,10" />
         <ListView Grid.Row="1"
-                  Grid.Column="8"
+                  Grid.Column="7"
                   Grid.RowSpan="2"
-                  Margin="0,0,0,10" />
+                  Margin="10,0,10, 10"
+                  Grid.ColumnSpan="2" 
+                  ItemsSource="{Binding Matches}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding TeamTwo.Name}" Width="200"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView Grid.Row="1"
+                  Grid.Column="6"
+                  Grid.RowSpan="2"
+                  Margin="10,0,10, 10"
+                  Grid.ColumnSpan="2" 
+                  ItemsSource="{Binding Matches}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Home}" Width="200"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
         <Grid Grid.Row="1"
               Grid.Column="6"
               Grid.RowSpan="2"
@@ -136,9 +166,10 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel.Resources>
                     <Style x:Key="StyleLabel" TargetType="Label">
-                        <Setter Property="Content" Value="{Binding TeamTwo.Name}"></Setter>
+                        <!--TODO:Scorebinding-->
+                        <Setter Property="Content" Value="{Binding Matches[{DynamicResource StyleLabel}].Home}"></Setter>
                         <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                         <Setter Property="FontFamily" Value="Gill Sans"></Setter>
                         <Setter Property="FontSize" Value="15"></Setter>
                         <Setter Property="Foreground" Value="DarkSeaGreen"></Setter>

@@ -18,6 +18,11 @@ namespace FussballManagerUI
         {
             this.DataContext = Helper.CreateSeason();
         }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
 #endif
     }
 }

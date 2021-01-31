@@ -31,7 +31,15 @@ namespace FussballManagerTest
             Saison s = new();
             for (int outer = 1; outer < teams.Count; outer++)
             for (int inner = 0; inner < teams.Count; inner++)
-                s.Matches.Add(new Match(teams[inner], teams[(inner + outer) % teams.Count]) { Day = outer });
+            {
+                s.Matches.Add(new Match(teams[inner], teams[(inner + outer) % teams.Count]) {Day = outer});
+            }
+
+            foreach (var item in s.Matches)
+            {
+                item.CalculateResult();
+            }
+
 
             return s;
         }

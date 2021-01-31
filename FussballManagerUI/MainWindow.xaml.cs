@@ -18,11 +18,12 @@ namespace FussballManagerUI
 
         private void currentSeason_Click(object sender, RoutedEventArgs e)
         {
-            FrmContent.Navigate(new CurrentSeasonPage(DataContext));
+            FrmContent.Navigate(new CurrentSeasonPage(Helper.CreateSeason()));
+            //FrmContent.Navigate(new CurrentSeasonPage(DataContext));
         }
 
 #if DEBUG
-        private void CreateDummySeason_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void CreateDummySeason_Click(object sender, RoutedEventArgs e)
         {
             this.DataContext = Helper.CreateSeason();
         }
