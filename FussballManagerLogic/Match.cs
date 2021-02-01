@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FussballManagerLogic
 {
@@ -43,7 +44,6 @@ namespace FussballManagerLogic
             if (teamAPerformance > teamBPerformance) Home = 1;
 
             if (teamAPerformance < teamBPerformance) Visitor = 1;
-
         }
     }
 }
