@@ -32,26 +32,27 @@ namespace FussballManagerUI
             base.OnDetaching();
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs eventArgs)
+        private void OnLoaded(object pSender, RoutedEventArgs pEventArgs)
         {
             var scrollViewer = GetScrollViewer(AssociatedObject);
             scrollViewer.ScrollChanged += OnScrollChanged;
+            AssociatedObject.Loaded -= OnLoaded;
         }
 
-        private ScrollViewer GetScrollViewer(DependencyObject dependencyObject)
+        private ScrollViewer GetScrollViewer(DependencyObject pDependencyObject)
         {
-            var border = VisualTreeHelper.GetChild(dependencyObject, 0);
+            var border = VisualTreeHelper.GetChild(pDependencyObject, 0);
             return (ScrollViewer) VisualTreeHelper.GetChild(border, 0);
         }
 
-        private void OnScrollChanged(object sender, ScrollChangedEventArgs eventArgs)
+        private void OnScrollChanged(object pSender, ScrollChangedEventArgs pEventArgs)
         {
             var scrollViewer = GetScrollViewer(Second);
 
             if (scrollViewer != null)
             {
-                scrollViewer.ScrollToVerticalOffset(eventArgs.VerticalOffset);
-                scrollViewer.ScrollToHorizontalOffset(eventArgs.HorizontalOffset);
+                scrollViewer.ScrollToVerticalOffset(pEventArgs.VerticalOffset);
+                scrollViewer.ScrollToHorizontalOffset(pEventArgs.HorizontalOffset);
             }
         }
     }

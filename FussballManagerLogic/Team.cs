@@ -6,12 +6,12 @@ namespace FussballManagerLogic
     public class Team
     {
         public string Name { get; set; }
-        private List<Player> players;
+        private List<Player> _players;
 
         public List<Player> Players
         {
-            get => players;
-            set => players = value;
+            get => _players;
+            set => _players = value;
         }
 
 
@@ -20,6 +20,7 @@ namespace FussballManagerLogic
             Name = pName;
             Players = new List<Player>();
         }
+
 
         public Team(int pPlayerCount)
         {
